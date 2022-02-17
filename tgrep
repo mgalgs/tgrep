@@ -1,0 +1,18 @@
+#!/bin/bash
+
+BUFFNAME=tgrep-${RANDOM}
+
+tmux choose-tree "capture-pane -b $BUFFNAME -S - -t %%"
+# wait for buffer to get written (apparently happens asynchronously)
+i=0
+while :; do
+    tmux list-buffers | cut -d: -f1 | grep -qe "^${BUFFNAME}\$" && break
+    sleep 0.5
+    ((i++))
+    [[ i -gt 30 ]] && {
+        echo "Couldn't find buffer :( Cowardly aborting."
+        exit 1
+    }
+done
+tmux show-buffer -b $BUFFNAME | grep $*
+tmux delete-buffer -b $BUFFNAME
