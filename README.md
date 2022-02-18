@@ -15,3 +15,7 @@ tgrep <grep arguments>
 
 `tgrep` doesn't have any command line arguments of its own. Everything gets
 passed down to `grep`.
+
+## Screenshots
+
+![tgrepping some dmesg output](/screenshots/example1.gif?raw=true "tgrepping some dmesg output")
